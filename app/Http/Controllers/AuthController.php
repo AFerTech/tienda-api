@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegistroRequest;
 
 class AuthController extends Controller
@@ -29,7 +30,14 @@ class AuthController extends Controller
     public function login(LoginRequest $request){
         $data = $request->validated();
 
-        
+        // verificar password
+        if(!Auth::attempt($data)){
+            return response([
+                'errors' =>['El Correo o Contraseña no son validos']
+            ], 422);
+        }
+        // autenticar usuario
+
     }
     public function logout(RegistroRequest $request){
 
